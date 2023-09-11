@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tegn fraktal</title>
+</head>
+<body>
+<canvas width="600" height="300"></canvas>
+<script>
+    let cx = document.querySelector("canvas").getContext("2d");
+    let blue = 20
+    let green = 100
+    let red = 200
+    function setColor() {
+        red = Math.floor(Math.random() * 256);
+        green = Math.floor(Math.random() * 256);
+        blue = Math.floor(Math.random() * 256);
+    }
+
+    function branch(length, angle, scale) {
+        setColor()
+        cx.fillStyle = `rgb(${red},${green},${blue})`
+        cx.fillRect(0,0,2,length)
+        if (length < 8) return
+        cx.save()
+        cx.translate(0,length)
+        cx.rotate(-angle)
+        branch(length*scale, angle, scale)
+        cx.rotate(2*angle)
+        branch(length*scale, angle, scale)
+        cx.restore()
+    }
+    cx.translate(300, 0) //flytter papir 300 horizontalt
+    branch(60, 0.5,0.8)
+    setInterval(() => branch(60,0.5,0.8), 1000)
+</script>
+</body>
+</html>
